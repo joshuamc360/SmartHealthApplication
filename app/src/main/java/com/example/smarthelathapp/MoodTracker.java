@@ -49,9 +49,11 @@ public class MoodTracker extends AppCompatActivity {
 
     private ListView appUsageListView;
     private ArrayList<String> appUsageList = new ArrayList<String>();
+    private ArrayList<AppUsageData> arrayList = new ArrayList<>();
     private ArrayAdapter mAdapter1;
+    private AppUsageDataAdapter AUadapter;
 
-    String mTitle[] = {"Facebook", "FlappyBird", "Twitter", "Instagram", "Youtube"};
+    String mTitle[] ;
     String mDescription[] = {"Facebook Description", "flappyBird Description", "Twitter Description", "Instagram Description", "Youtube Description"};
     int images[] = {R.drawable.facebook, R.drawable.flappybird, R.drawable.twitter, R.drawable.instagram, R.drawable.youtube};
 
@@ -67,7 +69,7 @@ public class MoodTracker extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
         moodDataRef = database.getReference("MoodChartData").child(user.getUid());
-
+        appUsageListView= (ListView) findViewById(R.id.lvAppUsage);
         moodChart = (GraphView) findViewById(R.id.gvMoodChart);
 
         //displaying data in graphView
@@ -82,9 +84,8 @@ public class MoodTracker extends AppCompatActivity {
         edaSeries.setTitle("EDA");
         moodChart.addSeries(edaSeries);
 
-
         moodChart.getLegendRenderer().setVisible(true);
-
+        moodChart.getGridLabelRenderer().setNumHorizontalLabels(3);
         moodChart.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter(){
             @Override
             public String formatLabel(double value, boolean isValueX) {
@@ -97,17 +98,15 @@ public class MoodTracker extends AppCompatActivity {
             }
         });
 
-        moodChart.getGridLabelRenderer().setNumHorizontalLabels(3);
+
 
         //display list entries
 
-        appUsageListView= (ListView) findViewById(R.id.lvAppUsage);
+
 //        mAdapter1 = new ArrayAdapter<String>(
 //                this, android.R.layout.simple_list_item_1, appUsageList
 //        );
-
-        MyAdapter adapter = new MyAdapter(this, mTitle,mDescription,images);
-        appUsageListView.setAdapter(adapter);
+        AUadapter = new AppUsageDataAdapter(MoodTracker.this,R.layout.row,arrayList);
 
         appUsageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -132,8 +131,6 @@ public class MoodTracker extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override
@@ -147,21 +144,25 @@ public class MoodTracker extends AppCompatActivity {
                 DataPoint[]dp2 = new DataPoint[(int) snapshot.getChildrenCount()];
 
                 int index = 0;
+                int num = random.nextInt(4)+0;
 
                 for(DataSnapshot myDataSnapshot : snapshot.getChildren()){
+
                     MoodData moodData = myDataSnapshot.getValue(MoodData.class);
                     dp1[index]= new DataPoint(moodData.getCurrentDate(), moodData.getEDA());
                     dp2[index]= new DataPoint(moodData.getCurrentDate(), moodData.getHR());
 
+                    arrayList.add(new AppUsageData(images[num],sdf.format(moodData.getCurrentDate()),mDescription[num]));
 
-                    int range = random.nextInt(250)+0;
-//                    appUsageList.add(sdf.format(moodData.getCurrentDate()));
+                    appUsageList.add(sdf.format(moodData.getCurrentDate()));
 
                     index++;
                 }
 
                 edaSeries.resetData(dp1);
                 hrSeries.resetData(dp2);
+
+                appUsageListView.setAdapter(AUadapter);
 
 //                appUsageListView.setAdapter(mAdapter1);
             }
@@ -171,40 +172,6 @@ public class MoodTracker extends AppCompatActivity {
 
             }
         });
-    }
-
-     class MyAdapter extends ArrayAdapter<String> {
-
-        Context context;
-        String rTitle[];
-        String rDescription[];
-        int rImgs[];
-
-        MyAdapter (Context c, String title[], String description[], int imgs[]) {
-            super(c, R.layout.row, R.id.textView1, title);
-            this.context = c;
-            this.rTitle = title;
-            this.rDescription = description;
-            this.rImgs = imgs;
-
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = layoutInflater.inflate(R.layout.row, parent, false);
-            ImageView images = row.findViewById(R.id.image);
-            TextView myTitle = row.findViewById(R.id.textView1);
-            TextView myDescription = row.findViewById(R.id.textView2);
-
-            // now set our resources on views
-            images.setImageResource(rImgs[position]);
-            myTitle.setText(rTitle[position]);
-            myDescription.setText(rDescription[position]);
-
-            return row;
-        }
     }
 
 
