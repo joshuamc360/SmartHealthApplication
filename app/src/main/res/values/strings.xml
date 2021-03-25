@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">SmartHelathApp</string>
+    <string name="stop_tracking">Stop</string>
+    <string name="heart_rate">0000</string>
+    <string name="start_tracking">Start Tracking</string>
+    <string name="EDA">000000</string>
+    <string name="button">Button</string>
+    <string name="password">Password</string>
+    <string name="name">UserName</string>
+    <string name="username">UserName</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="eda">EDA</string>
+    <string name="heart_rate_data">Heart Rate Data</string>
+    <string name="todays_hr_and_eda_data_displayed">Todays HR and EDA Data displayed</string>
+    <string name="back">Back</string>
+    <string name="verify_password">Verify Password</string>
+    <string name="email">email</string>
+    <string name="surname">surname</string>
+    <string name="firstname">firstname</string>
+    <string name="Email">Email</string>
+    <string name="hr">Heart Rate</string>
+    <string name="main_title">Main Title</string>
+    <string name="sub_title">Sub Title</string>
+    <string name="appimage">AppImage</string>
+</resources>

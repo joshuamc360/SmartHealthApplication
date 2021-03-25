@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:visibility="visible"
+    tools:context=".MainActivity"
+    tools:openDrawer="start">
+
+
+    <Button
+        android:id="@+id/btnStartTracking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="62dp"
+        android:gravity="start"
+        android:text="@string/start_tracking"
+        app:layout_constraintBottom_toTopOf="@+id/tvHRlable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEdaData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="27dp"
+        android:text="@string/EDA"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/tvHRlable"
+        app:layout_constraintTop_toBottomOf="@+id/tvHRlable" />
+
+    <Button
+        android:id="@+id/btnStopTracking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="@string/stop_tracking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvEdaData" />
+
+    <TextView
+        android:id="@+id/tvHrData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="27dp"
+        android:text="@string/heart_rate"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvHRlable"
+        app:layout_constraintTop_toBottomOf="@+id/tvHRlable" />
+
+    <TextView
+        android:id="@+id/tvHRlable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="260dp"
+        android:text="@string/hr"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEDALable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="27dp"
+        android:text="@string/eda"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvEdaData"
+        app:layout_constraintEnd_toEndOf="@+id/tvEdaData" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
