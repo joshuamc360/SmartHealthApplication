@@ -32,12 +32,6 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         back = (Button)findViewById(R.id.btnBack);
-        register= (Button)findViewById(R.id.btnRegisterNew);
-        firstName = (EditText)findViewById(R.id.etFirstName);
-        lastName = (EditText)findViewById(R.id.etLastName);
-        email = (EditText)findViewById(R.id.etNewEmail);
-        password = (EditText)findViewById(R.id.etPassword);
-        verifyPassword = (EditText)findViewById(R.id.etVerifyPassword);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -51,6 +45,13 @@ public class Register extends AppCompatActivity {
     }
 
     public void createAccount(View view){
+
+        register= (Button)findViewById(R.id.btnRegisterNew);
+        firstName = (EditText)findViewById(R.id.etFirstName);
+        lastName = (EditText)findViewById(R.id.etLastName);
+        email = (EditText)findViewById(R.id.etNewEmail);
+        password = (EditText)findViewById(R.id.etPassword);
+        verifyPassword = (EditText)findViewById(R.id.etVerifyPassword);
 
         if (isEmpty(firstName)) {
             Toast t = Toast.makeText(Register.this, "You must enter first name to register!", Toast.LENGTH_SHORT);
@@ -85,6 +86,7 @@ public class Register extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("TAG", "createUserWithEmail:success");
+                                Toast.makeText(Register.this, "Account Created.",Toast.LENGTH_SHORT).show();
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 Intent intent = new Intent(Register.this, MainActivity.class);
                                 startActivity(intent);

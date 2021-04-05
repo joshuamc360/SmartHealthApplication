@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,15 +49,16 @@ public class MoodTracker extends AppCompatActivity {
     private GraphView moodChart;
     private LineGraphSeries edaSeries, hrSeries;
 
+
     private ListView appUsageListView;
     private ArrayList<String> appUsageList = new ArrayList<String>();
     private ArrayList<AppUsageData> arrayList = new ArrayList<>();
-    private ArrayAdapter mAdapter1;
+    private ArrayList<MoodData> moodDataArrayList = new ArrayList<>();
     private AppUsageDataAdapter AUadapter;
 
     String mTitle[] ;
-    String mDescription[] = {"Facebook Description", "flappyBird Description", "Twitter Description", "Instagram Description", "Youtube Description"};
-    int images[] = {R.drawable.facebook, R.drawable.flappybird, R.drawable.twitter, R.drawable.instagram, R.drawable.youtube};
+    String mDescription[] = {"Facebook", "Flappy Bird", "Twitter", "Instagram", "Youtube"};
+    private int images[] = {R.drawable.facebook, R.drawable.flappybird, R.drawable.twitter, R.drawable.instagram, R.drawable.youtube};
 
     private Integer indexVal;
     private String item;
@@ -99,34 +102,32 @@ public class MoodTracker extends AppCompatActivity {
         });
 
 
-
         //display list entries
 
-
-//        mAdapter1 = new ArrayAdapter<String>(
-//                this, android.R.layout.simple_list_item_1, appUsageList
-//        );
         AUadapter = new AppUsageDataAdapter(MoodTracker.this,R.layout.row,arrayList);
 
         appUsageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                if (position ==  0) {
-                    Toast.makeText(MoodTracker.this, "Facebook Description", Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  0) {
-                    Toast.makeText(MoodTracker.this, "Whatsapp Description", Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  0) {
-                    Toast.makeText(MoodTracker.this, "Twitter Description", Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  0) {
-                    Toast.makeText(MoodTracker.this, "Instagram Description", Toast.LENGTH_SHORT).show();
-                }
-                if (position ==  0) {
-                    Toast.makeText(MoodTracker.this, "Youtube Description", Toast.LENGTH_SHORT).show();
-                }
+                TextView APPNAME = (TextView) view.findViewById(R.id.textView2);
+                String appName = APPNAME.getText().toString();
+
+                TextView TIME = (TextView) view.findViewById(R.id.textView1);
+                String appTime = TIME.getText().toString();
+
+                ImageView IMAGE = (ImageView) view.findViewById(R.id.ivImageRow);
+                //String imageName = IMAGE.get
+
+
+                Intent intent = new Intent(getApplicationContext(),AppUsageDetails.class);
+                intent.putExtra("name",appName);
+                intent.putExtra("time",appTime);
+//                intent.putExtra("image",imageName);
+                intent.putExtra("eda",String.valueOf(moodDataArrayList.get(position).getEDA()));
+                intent.putExtra("hr",String.valueOf(moodDataArrayList.get(position).getHR()));
+
+                startActivity(intent);
 
             }
         });
@@ -144,17 +145,19 @@ public class MoodTracker extends AppCompatActivity {
                 DataPoint[]dp2 = new DataPoint[(int) snapshot.getChildrenCount()];
 
                 int index = 0;
-                int num = random.nextInt(4)+0;
+                int noApps = 4;
+
+                arrayList.clear();
 
                 for(DataSnapshot myDataSnapshot : snapshot.getChildren()){
+                    int num = random.nextInt(noApps)+0;
 
                     MoodData moodData = myDataSnapshot.getValue(MoodData.class);
                     dp1[index]= new DataPoint(moodData.getCurrentDate(), moodData.getEDA());
                     dp2[index]= new DataPoint(moodData.getCurrentDate(), moodData.getHR());
 
+                    moodDataArrayList.add(moodData);
                     arrayList.add(new AppUsageData(images[num],sdf.format(moodData.getCurrentDate()),mDescription[num]));
-
-                    appUsageList.add(sdf.format(moodData.getCurrentDate()));
 
                     index++;
                 }
@@ -163,8 +166,6 @@ public class MoodTracker extends AppCompatActivity {
                 hrSeries.resetData(dp2);
 
                 appUsageListView.setAdapter(AUadapter);
-
-//                appUsageListView.setAdapter(mAdapter1);
             }
 
             @Override

@@ -97,8 +97,8 @@ public class Tracking extends AppCompatActivity {
             String beatsPerMinute = String.valueOf(generateBPM());
             String edActivity = String.valueOf(generateEDA());
 
-            bpm.setText(beatsPerMinute);
-            eda.setText(edActivity);
+            bpm.setText(beatsPerMinute+" BPM");
+            eda.setText(edActivity+" Seimens");
 
             String id = myRef.push().getKey();
             long currentDate = new Date().getTime();
