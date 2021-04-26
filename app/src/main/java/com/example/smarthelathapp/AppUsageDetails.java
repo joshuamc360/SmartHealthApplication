@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AppUsageDetails extends AppCompatActivity {
 
@@ -34,33 +35,37 @@ public class AppUsageDetails extends AppCompatActivity {
         moodDescritpion = findViewById(R.id.tvMoodDescription);
 
 
-        Intent intent =getIntent();
+        moodColour.setImageResource(colourIndicators[2]);
+        moodDescritpion.setText(colourDescritpions[2]);
+
+        Intent intent = getIntent();
         appName.setText(intent.getStringExtra("name"));
         time.setText(intent.getStringExtra("time"));
         appImage.setImageResource(intent.getIntExtra("image",0));
         hr.setText(intent.getStringExtra("hr"));
         eda.setText(intent.getStringExtra("eda"));
 
-//        int intHr = intent.getIntExtra("hr",0);
+        String hr = intent.getStringExtra("hr");
+        int intHr = Integer.parseInt(hr);
+
 
         int stress = 200;
         int risingStress = 180;
         int calm = 140;
 
-//        if(intHr >= stress){
-//            moodDescritpion.setText(colourDescritpions[0]);
-//            moodColour.setImageResource(colourIndicators[0]);
-//        }
-//
-//        if(intHr >= risingStress){
-//            moodDescritpion.setText(colourDescritpions[1]);
-//            moodColour.setImageResource(colourIndicators[1]);
-//        }
-//
-//        if(intHr >= calm){
-//            moodDescritpion.setText(colourDescritpions[2]);
-//            moodColour.setImageResource(colourIndicators[2]);
-//        }
+
+        if(intHr >= stress){
+            moodDescritpion.setText(colourDescritpions[0]);
+            moodColour.setImageResource(colourIndicators[0]);
+
+        } else if(intHr >= risingStress){
+            moodDescritpion.setText(colourDescritpions[1]);
+            moodColour.setImageResource(colourIndicators[1]);
+
+        } else if(intHr >= calm){
+            moodDescritpion.setText(colourDescritpions[2]);
+            moodColour.setImageResource(colourIndicators[2]);
+        }
 
     }
 }

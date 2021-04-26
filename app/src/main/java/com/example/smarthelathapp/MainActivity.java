@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void signIn(View view){
 
         EditText emailField = (EditText) findViewById(R.id.etEmail);
@@ -56,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Field's Cannot be Empty",
                     Toast.LENGTH_SHORT).show();
         }else {
-
-
+            
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

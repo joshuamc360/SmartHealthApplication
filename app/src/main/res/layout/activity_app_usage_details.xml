@@ -39,7 +39,8 @@
         android:layout_marginRight="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="TODO" />
 
     <EditText
         android:id="@+id/etAdditionalThoughts"
@@ -58,19 +59,17 @@
         android:id="@+id/tvHRDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="34dp"
-        android:layout_marginLeft="34dp"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="37dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/ivAppImage" />
+        app:layout_constraintStart_toStartOf="@+id/tvEDAdisplay"
+        app:layout_constraintTop_toBottomOf="@+id/tvEDAdisplay" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/heart_rate_data"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvEDAdisplay"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvHRDisplay"
         app:layout_constraintEnd_toEndOf="@+id/textView6" />
 
     <TextView
@@ -80,17 +79,19 @@
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
         android:text="@string/eda"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvHRDisplay"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvEDAdisplay"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvEDAdisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="58dp"
         android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/tvHRDisplay"
-        app:layout_constraintTop_toBottomOf="@+id/tvHRDisplay" />
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/ivAppImage" />
 
     <TextView
         android:id="@+id/tvAdditionalThoughts"
@@ -100,7 +101,7 @@
         android:layout_marginLeft="25dp"
         android:layout_marginEnd="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginBottom="41dp"
         android:text="Add Any Additional Fellings you may have had at this time"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/etAdditionalThoughts"
@@ -113,7 +114,7 @@
         android:layout_height="92dp"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="58dp"
         android:layout_marginBottom="57dp"
         app:layout_constraintBottom_toTopOf="@+id/tvAdditionalThoughts"
         app:layout_constraintStart_toStartOf="parent"

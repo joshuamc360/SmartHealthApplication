@@ -3,13 +3,17 @@ package com.example.smarthelathapp;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,19 +41,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-public class MoodTracker extends AppCompatActivity {
+public class MoodTracker extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private FirebaseAuth mAuth;
     private FirebaseUser user;
     private FirebaseDatabase database;
     private DatabaseReference moodDataRef;
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
     private SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
     private static Random random = new Random();
 
     private GraphView moodChart;
     private LineGraphSeries edaSeries, hrSeries;
-
 
     private ListView appUsageListView;
     private ArrayList<String> appUsageList = new ArrayList<String>();
@@ -75,6 +82,12 @@ public class MoodTracker extends AppCompatActivity {
         appUsageListView= (ListView) findViewById(R.id.lvAppUsage);
         moodChart = (GraphView) findViewById(R.id.gvMoodChart);
 
+        navigationView=findViewById(R.id.nav_view);
+        drawerLayout=findViewById(R.id.drawer_layout);
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+
         //displaying data in graphView
 
         hrSeries = new LineGraphSeries();
@@ -86,6 +99,10 @@ public class MoodTracker extends AppCompatActivity {
         edaSeries.setColor(Color.RED);
         edaSeries.setTitle("EDA");
         moodChart.addSeries(edaSeries);
+
+
+        moodChart.getViewport().setScalable(true);
+        moodChart.getViewport().setXAxisBoundsManual(true);
 
         moodChart.getLegendRenderer().setVisible(true);
         moodChart.getGridLabelRenderer().setNumHorizontalLabels(3);
@@ -117,8 +134,6 @@ public class MoodTracker extends AppCompatActivity {
                 String appTime = TIME.getText().toString();
 
                 ImageView IMAGE = (ImageView) view.findViewById(R.id.ivImageRow);
-                //String imageName = IMAGE.get
-
 
                 Intent intent = new Intent(getApplicationContext(),AppUsageDetails.class);
                 intent.putExtra("name",appName);
@@ -175,6 +190,42 @@ public class MoodTracker extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else
+        {super.onBackPressed();
+        }
+    }
 
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.nav_my_mood_data:
+                Intent homeIntent = new Intent(MoodTracker.this, MoodTracker.class);
+                startActivity(homeIntent);
+                break;
+
+            case R.id.nav_start_tracking:
+                Intent incomeIntent = new Intent(MoodTracker.this, Tracking.class);
+                startActivity(incomeIntent);
+                break;
+
+            case R.id.nav_logout:
+                FirebaseAuth.getInstance().signOut();
+
+                Intent logoutIntent = new Intent(MoodTracker.this, MainActivity.class);
+                startActivity(logoutIntent);
+                finish();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
 

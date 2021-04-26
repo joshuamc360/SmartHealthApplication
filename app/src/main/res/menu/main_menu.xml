@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_start_tracking"
+            android:icon="@drawable/ic_mood_tracking"
+            android:title="@string/start_tracking" />
+
+        <item
+            android:id="@+id/nav_my_mood_data"
+            android:icon="@drawable/ic_baseline_mood_24"
+            android:title="@string/mood_data" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_log_out"
+            android:title="@string/logout" />
+
+    </group>
+
+</menu>
